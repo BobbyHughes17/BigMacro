@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<h1 th:text="${header}"></h1>
+<nav th:replace="fragments :: nav"></nav>
+
+<form method="post" th:object="${user}">
+    <div>
+        <label th:for="userName">User Name</label>
+        <input type="text" th:field="*{userName}" th:value="${user.userName}" placeholder="Input User Name"/>
+        <span th:errors="*{userName}"></span>
+        <span th:text="${userError}"></span>
+    </div>
+    <div>
+        <label th:for="password">Password</label>
+        <input type="password" th:field="*{password}" placeholder="Input password"/>
+        <span th:errors="*{password}"></span>
+    </div>
+    <div>
+        <label th:for="verPass">Password</label>
+        <input type="password" th:name="verPass" placeholder="Confirm Password"/>
+        <span th:text="${passMatchError}"></span>
+    </div>
+    <div>
+        <label th:for="email">Email</label>
+        <input type="email" th:field="*{email}" th:value="${user.email}" placeholder="Input email"/>
+        <span th:errors="*{email}"></span>
+        <span th:text=" ${emailError}"></span>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+
+</form>
+<div>
+<p th:text="${name}"></p>
+</div>
+</body>
+</html>
