@@ -5,9 +5,19 @@
 <h1 th:text="${header}"></h1>
 <nav th:replace="fragments :: nav"></nav>
 
-<ul th:each="user:${users}">
-    <li  th:text="${user.userName}"></li>
-</ul>
+<form method="post">
+    <div>
+        <label th:for="userName">User Name</label>
+        <input type="text" th:name="userName" placeholder="Input User Name"/>
+    </div>
+    <div>
+        <label th:for="password">Password</label>
+        <input type="password" th:name="password" placeholder="Input password"/>
+    </div>
+    <div>
+        <input type="submit" value="Login"/>
+    </div>
+</form>
 
 </body>
 </html>

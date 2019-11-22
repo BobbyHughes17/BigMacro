@@ -27,12 +27,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public String validateUser(Model model, Errors errors){
-        if (errors.hasErrors()) {
-            model.addAttribute("header","Login");
-            return "user/index";
-        }
+    public String validateUser(Model model,@RequestParam String userName,@RequestParam String password){
         model.addAttribute("header","Login");
+        // get user data from DB if exists
+        List<User> findUser = userDao.findAllByUserName(userName);
+        // if user exists check to see if password matches
+        if (findUser.size() >=1 && findUser.get(0).getPassword().equals(password)){
+            return "user/working";
+        }
+
         return "user/index";
     }
 
