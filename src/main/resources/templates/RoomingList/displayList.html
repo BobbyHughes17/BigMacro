@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title>HotComp</title>
+</head>
+<body>
+    <table>
+        <th>FIrst Name</th>
+        <th>Last Name</th>
+        <th>Check-in Date</th>
+        <th>Check-out Date</th>
+        <tr th:each="attendee:${thisLIst}">
+            <td th:text="${attendee.firstName}"></td>
+            <td th:text="${attendee.lastName}"></td>
+            <td th:text="${attendee.checkInDate}"></td>
+            <td th:text="${attendee.checkOutDate}"></td>
+        </tr>
+    </table>
+</body>
+</html>

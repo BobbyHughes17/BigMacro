@@ -2,18 +2,24 @@ package com.HotComp.List.Compare.controllers;
 
 import com.HotComp.List.Compare.models.User;
 import com.HotComp.List.Compare.models.data.UserDao;
+import org.apache.coyote.Request;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
 
 @Controller
 @RequestMapping("user")
+@SessionAttributes("curUser")
 public class UserController {
 
     @Autowired
@@ -27,16 +33,23 @@ public class UserController {
     }
 
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public String validateUser(Model model,@RequestParam String userName,@RequestParam String password){
+    public String validateUser(ModelMap model, @RequestParam String userName, @RequestParam String password,HttpServletRequest request){
         model.addAttribute("header","Login");
         // get user data from DB if exists
         List<User> findUser = userDao.findAllByUserName(userName);
+        User user = findUser.get(0);
         // if user exists check to see if password matches
         if (findUser.size() >=1 && findUser.get(0).getPassword().equals(password)){
-            return "user/working";
+            model.addAttribute("curUser",findUser.get(0));
+            return "redirect:welcome";
         }
 
         return "user/index";
+    }
+
+    @RequestMapping(value = "welcome", method=RequestMethod.GET)
+    public String welcomePage(ModelMap model){
+        return "user/working";
     }
 
     @RequestMapping(value = "sign-up", method = RequestMethod.GET)

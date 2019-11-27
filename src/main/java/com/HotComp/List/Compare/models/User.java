@@ -1,15 +1,19 @@
 package com.HotComp.List.Compare.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class User {
+public class User implements Serializable    {
     @Id
     @GeneratedValue
     private int id;
@@ -25,6 +29,10 @@ public class User {
     @NotNull(message = "Email must not be blank")
     @Email(message = "Must be a valid email address")
     private String email;
+
+    @OneToMany
+    @JoinColumn(name = "User_id")
+    private List<RoomingList> roomingLists = new ArrayList<>();
 
     public User(){
     }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface UserDao extends CrudRepository<User,Long> {
+public interface UserDao extends CrudRepository<User,Integer>  {
 
     //find User by User Name
     List<User> findAllByUserName(String userName);
@@ -17,5 +17,5 @@ public interface UserDao extends CrudRepository<User,Long> {
     //find User by Email address
     List<User> findAllByEmail(String email);
 
-
+    Integer findById(int id);
 }

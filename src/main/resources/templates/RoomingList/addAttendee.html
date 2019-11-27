@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title>HotComp</title>
+</head>
+<body>
+    <form method="post">
+        <div>
+            <label th:for="attendeeFirst">Attendee Name</label>
+            <input type="text" name="attendeeFirst" placeholder="Input attendee name"/>
+        </div>
+        <div>
+            <label th:for="attendeeLast">Attendee Name</label>
+            <input type="text" name="attendeeLast" placeholder="Input attendee name"/>
+        </div>
+        <div>
+            <label th:for="checkInDate">Attendee Name</label>
+            <input type="date" name="checkInDate" placeholder="Input attendee name"/>
+        </div>
+        <div>
+            <label th:for="checkOutDate">Attendee Name</label>
+            <input type="text" name="checkOutDate" placeholder="Input attendee name"/>
+        </div>
+    </form>
+</body>
+</html>
