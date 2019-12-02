@@ -1,5 +1,6 @@
 package com.HotComp.List.Compare.controllers;
 
+import com.HotComp.List.Compare.models.Attendee;
 import com.HotComp.List.Compare.models.RoomingList;
 import com.HotComp.List.Compare.models.User;
 import com.HotComp.List.Compare.models.data.AttendeeDao;
@@ -8,10 +9,14 @@ import com.HotComp.List.Compare.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.nio.file.Path;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -54,7 +59,6 @@ public class RoomingListController {
         DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
         Date date = new Date();
 
-
         roomingList.setListName(listName);
         roomingList.setUser(curUser);
         roomingList.setUploadDate(date);
@@ -63,16 +67,29 @@ public class RoomingListController {
         return "redirect:";
     }
 
-    @RequestMapping(value = "listId=${listId}", method = RequestMethod.GET)
-    public String viewLIst(Model model, @RequestParam int listId){
+   @RequestMapping(value="/{listId}/add-attendee", method = RequestMethod.GET)
+   public String addAttendee(Model model, @PathVariable int listId,@ModelAttribute("attendee") Attendee attendee){
+        String listName = roomingDao.findOneById(listId).getListName();
+        model.addAttribute("listName",listName);
+        model.addAttribute(new Attendee());
+        return "RoomingList/addAttendee";
+   }
+
+   @RequestMapping(value="/{listId}/add-attendee",method = RequestMethod.POST)
+   public String validateAttendee(Model model, @PathVariable int listId, @ModelAttribute("attendee")Attendee attendee, Errors errors){
+        if (errors.hasErrors()){
+            model.addAttribute(attendee);
+            return "RoomingList/addAttendee";
+        }
+        attendee.setRoomingList(roomingDao.findOneById(listId));
+        attendeeDao.save(attendee);
+        return "redirect:";
+   }
+
+    @RequestMapping(value = "{listId}",method = RequestMethod.GET)
+    public String listAttendees(Model model, @PathVariable int listId){
         model.addAttribute("thisList",attendeeDao.findAllByRoomingList_Id(listId));
         return "RoomingList/displayList";
     }
-
-    @RequestMapping(value = "listId=${listId}/add",method = RequestMethod.GET)
-    public String addAttendee(Model model){
-        return "RoomingList/addAttendee";
-    }
-
 
 }

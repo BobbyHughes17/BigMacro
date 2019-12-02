@@ -2,6 +2,9 @@ package com.HotComp.List.Compare.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -17,10 +20,8 @@ public class Attendee {
     @NotNull
     private String lastName;
 
-    @NotNull
     private Date checkInDate;
 
-    @NotNull
     private Date checkOutDate;
 
     @ManyToOne
@@ -32,11 +33,12 @@ public class Attendee {
     }
 
     public Attendee(@NotNull String firstName, @NotNull String lastName, @NotNull Date checkInDate, @NotNull Date checkOutDate) {
+
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-
     }
 
     public int getId() {
@@ -63,16 +65,18 @@ public class Attendee {
         return checkInDate;
     }
 
-    public void setCheckInDate(Date checkInDate) {
-        this.checkInDate = checkInDate;
+    public void setCheckInDate(String checkInDate) throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        this.checkInDate = format.parse(checkInDate);
     }
 
     public Date getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(Date checkOutDate) {
-        this.checkOutDate = checkOutDate;
+    public void setCheckOutDate(String checkOutDate) throws ParseException{
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        this.checkOutDate = format.parse(checkOutDate);
     }
 
     public RoomingList getRoomingList() {

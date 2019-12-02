@@ -6,11 +6,11 @@
 </head>
 <body>
     <table>
-        <th>FIrst Name</th>
+        <th>First Name</th>
         <th>Last Name</th>
         <th>Check-in Date</th>
         <th>Check-out Date</th>
-        <tr th:each="attendee:${thisLIst}">
+        <tr th:each="attendee:${thisList}">
             <td th:text="${attendee.firstName}"></td>
             <td th:text="${attendee.lastName}"></td>
             <td th:text="${attendee.checkInDate}"></td>

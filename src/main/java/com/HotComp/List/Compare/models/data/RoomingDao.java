@@ -11,4 +11,6 @@ import java.util.List;
 @Transactional
 public interface RoomingDao extends CrudRepository<RoomingList,Integer> {
     List<RoomingList> findAllByUser_id(int id);
+
+    RoomingList findOneById(int id);
 }
